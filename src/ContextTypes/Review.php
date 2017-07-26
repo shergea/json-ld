@@ -19,5 +19,6 @@ class Review extends AbstractContext
         'publisher' => Organization::class,
         'duration' => Duration::class,
         'datePublished' => null,
+        'description'=>null,
     ];
 }

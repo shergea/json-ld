@@ -1,7 +1,6 @@
 <?php
 namespace JsonLd\ContextTypes;
-
-class Product extends AbstractContext
+class Product extends ProductAbstractContext
 {
     /**
      * Property structure
@@ -11,11 +10,11 @@ class Product extends AbstractContext
     protected $structure = [
         'name' => null,
         'description' => null,
-        'brand' => null,
+        'brand' => Brand::class,
         'image' => null,
         'sku' => null,
         'url' => null,
-        'review' => Review::class,
+        'review' => null,
         'aggregateRating' => AggregateRating::class,
         'offers' => Offer::class,
         'gtin8' => null,
@@ -23,33 +22,31 @@ class Product extends AbstractContext
         'gtin14' => null,
         'mpn' => null,
         'category' => null,
-        'model' => null,
-        'isSimilarTo' => Product::class,
+        'model' => null
     ];
 
-
     /**
-     * Set isSimilarTo attributes.
+     * Set in album attribute
      *
-     * @param  mixed $values
+     * @param array|string $items
      * @return array
      */
-    protected function setIsSimilarToAttribute($values)
+    protected function setReviewAttribute($items)
     {
-        if (is_array($values)) {
-            foreach ($values as $key => $value) {
-                $product = new self($value);
-
-                $properties = $product->getProperties();
-
-                unset($properties['@context']);
-
-                $properties = array_filter($properties, 'strlen');
-
-                $values[$key] = $properties;
-            }
+        if ( ! is_array($items))
+        {
+            return $items;
         }
-
-        return $values;
+        //Check if not multidimensional array (for backward compatibility)
+        if((count($items) == count($items, COUNT_RECURSIVE)))
+        {
+            return $this->getNestedContext(Review::class, $items);
+        }
+        //multiple albums
+        return array_map(function ($item) {
+            return $this->getNestedContext(Review::class, $item);
+        }, $items);
     }
+
+
 }
