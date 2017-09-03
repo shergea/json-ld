@@ -23,8 +23,9 @@ class ListItem extends AbstractContext
     protected function setItemAttribute($item)
     {
         return [
-            '@id' => $this->getArrValue($item, 'url'),
-            'name' => $this->getArrValue($item, 'name')
+            '@id' => $this->getArrValue($item, 'id'),
+            'name' => $this->getArrValue($item, 'name'),
+            'url'=> $this->getArrValue($item, 'url')
         ];
     }
 }
