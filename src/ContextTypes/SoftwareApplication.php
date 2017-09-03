@@ -16,6 +16,7 @@ class SoftwareApplication extends SoftwareApplicationAbstractContext
         'inLanguage'=>null,
         'datePublished'=>null,
         'screenshot' => null,
+        'operatingSystem'=>null,
         'image' => null,
         'softwareVersion' => null,
         'url' => null,
