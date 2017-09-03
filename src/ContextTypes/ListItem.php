@@ -24,6 +24,7 @@ class ListItem extends AbstractContext
     {
         return [
             '@id' => $this->getArrValue($item, 'id'),
+            '@type' =>'SoftwareApplication',
             'name' => $this->getArrValue($item, 'name'),
             'url'=> $this->getArrValue($item, 'url')
         ];
